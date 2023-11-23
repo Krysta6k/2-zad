@@ -1,0 +1,171 @@
+.main-slider {
+    .slick-slide {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        aspect-ratio: 1398/553;
+        padding: 60px 85px;
+        @media (max-width: 1199px) {
+            padding: 40px 55px;
+        }
+        @media (max-width: 991px) {
+            padding: 30px 35px;
+        }
+        @media (max-width: 767px) {
+            padding: 0;
+            aspect-ratio: unset;
+            justify-content: start;
+            border-radius: 0;
+        }
+
+        &::after {
+            content: " ";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(90deg, rgba(7, 5, 15, 0.82) 0%, rgba(7, 5, 15, 0) 61.44%);
+        }
+        .btn-flex {
+            gap: 20px 30px;
+            @media (max-width: 767px) {
+                flex-direction: column;
+            }
+        }
+        .title {
+            font-weight: 700;
+            font-size: 40px;
+            margin-bottom: 43px;
+            max-width: 402px;
+            @media (max-width: 1199px) {
+                font-size: 36px;
+            }
+            @media (max-width: 991px) {
+                font-size: 28px;
+                max-width: 300px;
+            }
+            @media (max-width: 767px) {
+                font-size: 24px;
+                margin-bottom: 30px;
+                padding: 0 12px;
+                margin-top: 20px;
+                max-width: unset;
+            }
+        }
+        .bg-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            object-fit: cover;
+            z-index: -1;
+            @media (max-width: 767px) {
+                position: static;
+                order: -1;
+                aspect-ratio: 1398/553;
+                border-radius: 16px;
+            }
+        }
+        .age {
+            position: absolute;
+            left: 6.5%;
+            top: 7%;
+            font-size: 18px;
+            font-weight: 600;
+            @media (max-width: 575px) {
+                font-size: 12px;
+                top: 12px;
+                left: 12px;
+            }
+        }
+    }
+}
+.main-slider-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 33px;
+    margin-top: 23px;
+    @media (max-width: 575px) {
+        gap: 20px;
+    }
+
+    .slick-dots {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        padding: 0;
+        order: 2;
+        height: 36px;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10 and IE 11 */
+        user-select: none; /* Standard syntax */
+        button {
+            height: 36px;
+            line-height: 36px;
+        }
+    }
+    .slick-next,
+    .slick-prev {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: none;
+    }
+    .slick-prev {
+        order: 1;
+    }
+    .slick-next {
+        order: 3;
+    }
+}
+.new-slider {
+    margin: 0 -15px;
+    .slick-slide {
+        margin: 0 15px;
+        aspect-ratio: 340/480;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        &:hover {
+            .controls {
+                opacity: 1;
+            }
+            img {
+                transform: scale(1.05);
+            }
+        }
+        img {
+            object-fit: cover;
+            border-radius: 16px;
+            transition: all ease-in-out 0.5s;
+        }
+        .controls {
+            position: absolute;
+            opacity: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            top: 0;
+            padding: 50px;
+            transition: all ease-in-out 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            gap: 30px;
+            background: linear-gradient(360deg, #000000 0%, rgba(0, 0, 0, 0) 57.47%);
+            .btn {
+                width: 100%;
+            }
+        }
+    }
+}

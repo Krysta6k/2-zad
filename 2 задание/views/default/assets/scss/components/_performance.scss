@@ -1,0 +1,56 @@
+.cinema {
+    position: relative;
+    background-image: url("/img/screen.png");
+    background-repeat: no-repeat;
+    background-position: top center;
+    width: 100%;
+    background-size: 70%;
+    padding-top: 140px;
+    min-width: 660px;
+}
+
+.places {
+    min-height: 350px;
+    margin: 0 auto;
+    position: inherit;
+}
+
+.place {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #6e6e6e;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 1;
+    font-size: 12px;
+    padding: 6px 0;
+    cursor: pointer;
+    &.select {
+        background: #0877fa !important;
+    }
+}
+
+.cost {
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    .price {
+        font-size: 30px;
+        font-weight: 400;
+        margin-left: 15px;
+    }
+    .rub {
+        font-size: 28px;
+        font-weight: 400;
+    }
+}
+.seat-icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    background: #6e6e6e;
+    &.selected {
+        background: #0877fa;
+    }
+}

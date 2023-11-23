@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: *=*
+Disallow: *?*
+Sitemap: https://site.ru/sitemap.xml
+Host: https://site.ru

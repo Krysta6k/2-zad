@@ -1,0 +1,35 @@
+$white: #ffffff;
+$black: #08090f;
+
+$red: #df262b;
+$yellow: #f59c24;
+$green: #4aaf09;
+$dark-grey: #4b4b4b;
+$light-grey: #7e7e7e;
+$blue: #0877fa;
+$blue-hover: #004ca6;
+$colors: (
+    black: $black,
+    white: $white,
+    dark-grey: $dark-grey,
+    light-grey: $light-grey,
+    red: $red,
+    yellow: $yellow,
+    green: $green,
+    blue: $blue,
+    blue-hover: $blue-hover,
+    transparent: transparent,
+);
+
+@each $name, $color in $colors {
+    .bg-#{$name} {
+        background-color: $color !important;
+    }
+    .text-#{$name} {
+        color: $color !important;
+    }
+    .btn-outline-#{$name} {
+        border-color: $color !important;
+        color: $color;
+    }
+}
