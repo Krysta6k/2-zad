@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Хост: localhost
--- Время создания: Окт 26 2023 г., 13:41
--- Версия сервера: 10.5.22-MariaDB-1:10.5.22+maria~ubu2004
--- Версия PHP: 7.3.33
+-- Хост: 127.0.0.1:3306
+-- Время создания: Ноя 24 2023 г., 18:25
+-- Версия сервера: 5.6.51
+-- Версия PHP: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,32 +24,50 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `link` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `categories`
+--
+
+INSERT INTO `categories` (`id`, `link`, `name`) VALUES
+(1, 'https://burger', 'бургеры'),
+(2, 'https://пицца', 'пицца'),
+(3, 'https://чето', 'роллы'),
+(4, 'https://шаверма', 'шаверма'),
+(5, 'https://супы', 'супы'),
+(6, 'https://собаки', 'вкусные собачки апачмачки');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `controllers`
 --
 
-DROP TABLE IF EXISTS `controllers`;
 CREATE TABLE `controllers` (
   `id` int(10) UNSIGNED NOT NULL,
   `rating` int(11) NOT NULL,
   `title` text NOT NULL,
   `name` text NOT NULL,
-  `description` text DEFAULT NULL,
-  `type` int(11) NOT NULL DEFAULT 1,
-  `access` tinytext DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `seo_title` text DEFAULT NULL,
-  `seo_keywords` text DEFAULT NULL,
-  `seo_description` text DEFAULT NULL,
+  `description` text,
+  `type` int(11) NOT NULL DEFAULT '1',
+  `access` tinytext,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `seo_title` text,
+  `seo_keywords` text,
+  `seo_description` text,
   `robots_index` varchar(7) DEFAULT 'noindex',
   `robots_follow` varchar(8) DEFAULT 'nofollow',
   `lang_code` varchar(3) NOT NULL DEFAULT 'ru'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `controllers`
---
-
-TRUNCATE TABLE `controllers`;
 --
 -- Дамп данных таблицы `controllers`
 --
@@ -70,20 +88,14 @@ INSERT INTO `controllers` (`id`, `rating`, `title`, `name`, `description`, `type
 -- Структура таблицы `controller_types`
 --
 
-DROP TABLE IF EXISTS `controller_types`;
 CREATE TABLE `controller_types` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` tinytext NOT NULL,
-  `description` text DEFAULT NULL,
-  `rating` int(11) NOT NULL DEFAULT 10,
+  `description` text,
+  `rating` int(11) NOT NULL DEFAULT '10',
   `lang_code` varchar(3) NOT NULL DEFAULT 'ru'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `controller_types`
---
-
-TRUNCATE TABLE `controller_types`;
 --
 -- Дамп данных таблицы `controller_types`
 --
@@ -100,34 +112,28 @@ INSERT INTO `controller_types` (`id`, `title`, `description`, `rating`, `lang_co
 -- Структура таблицы `docs`
 --
 
-DROP TABLE IF EXISTS `docs`;
 CREATE TABLE `docs` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `title` tinytext NOT NULL,
   `sef` tinytext NOT NULL,
-  `description` text DEFAULT NULL,
-  `content` longtext DEFAULT NULL,
-  `date_create` timestamp NOT NULL DEFAULT current_timestamp(),
-  `date_modify` timestamp NOT NULL DEFAULT current_timestamp(),
-  `views` int(11) NOT NULL DEFAULT 0,
+  `description` text,
+  `content` longtext,
+  `date_create` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_modify` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `views` int(11) NOT NULL DEFAULT '0',
   `status` smallint(3) NOT NULL,
-  `rating` int(5) NOT NULL DEFAULT 10,
+  `rating` int(5) NOT NULL DEFAULT '10',
   `author_id` int(11) DEFAULT NULL,
   `type_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  `seo_title` text DEFAULT NULL,
-  `seo_keywords` text DEFAULT NULL,
-  `seo_description` text DEFAULT NULL,
+  `seo_title` text,
+  `seo_keywords` text,
+  `seo_description` text,
   `robots_index` varchar(7) NOT NULL DEFAULT 'index',
   `robots_follow` varchar(8) NOT NULL DEFAULT 'follow',
   `lang_code` varchar(3) NOT NULL DEFAULT 'ru'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `docs`
---
-
-TRUNCATE TABLE `docs`;
 --
 -- Дамп данных таблицы `docs`
 --
@@ -143,47 +149,53 @@ INSERT INTO `docs` (`id`, `title`, `sef`, `description`, `content`, `date_create
 -- Структура таблицы `goods`
 --
 
-DROP TABLE IF EXISTS `goods`;
 CREATE TABLE `goods` (
-  `id` int(11) NOT NULL,
-  `ext_id` int(11) NOT NULL,
-  `title` int(11) NOT NULL,
-  `description` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(11) DEFAULT NULL,
+  `idcategories` int(11) NOT NULL,
+  `img` date NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(11) NOT NULL,
+  `weight` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Очистить таблицу перед добавлением данных `goods`
+-- Дамп данных таблицы `goods`
 --
 
-TRUNCATE TABLE `goods`;
+INSERT INTO `goods` (`id`, `idcategories`, `img`, `description`, `price`, `weight`) VALUES
+(1, 1, '0000-00-00', 'супер бургер', 100, 1),
+(1, 1, '0000-00-00', 'собака бурегр', 2, 2),
+(1, 1, '0000-00-00', 'чизбурегур', 111, 11),
+(1, 1, '0000-00-00', 'какакафас', 213, 123),
+(2, 2, '0000-00-00', 'пицца', 123, 123),
+(3, 3, '0000-00-00', 'роллы', 213, 231),
+(4, 4, '0000-00-00', 'шаверма', 213, 213),
+(6, 6, '0000-00-00', 'суппеы', 123, 123),
+(7, 7, '0000-00-00', 'суппы', 123, 213),
+(8, 8, '0000-00-00', 'вкусные собачки', 213, 213);
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `information`
 --
 
-DROP TABLE IF EXISTS `information`;
 CREATE TABLE `information` (
   `id` smallint(5) UNSIGNED NOT NULL,
   `title` text NOT NULL,
   `tagline` mediumtext NOT NULL,
   `description` mediumtext NOT NULL,
   `phone` text NOT NULL,
-  `email` text DEFAULT NULL,
-  `address` mediumtext DEFAULT NULL,
-  `working_time` mediumtext DEFAULT NULL,
-  `requisites` longtext DEFAULT NULL,
-  `img` mediumtext DEFAULT NULL,
+  `email` text,
+  `address` mediumtext,
+  `working_time` mediumtext,
+  `requisites` longtext,
+  `img` mediumtext,
   `alt_tag` varchar(160) DEFAULT NULL,
   `lang_code` varchar(3) NOT NULL,
   `city_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
---
--- Очистить таблицу перед добавлением данных `information`
---
-
-TRUNCATE TABLE `information`;
 --
 -- Дамп данных таблицы `information`
 --
@@ -198,92 +210,88 @@ INSERT INTO `information` (`id`, `title`, `tagline`, `description`, `phone`, `em
 -- Структура таблицы `logs`
 --
 
-DROP TABLE IF EXISTS `logs`;
 CREATE TABLE `logs` (
   `id` int(11) UNSIGNED NOT NULL,
   `date_create` varchar(20) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `message` text DEFAULT NULL,
-  `controller` tinytext DEFAULT NULL,
-  `action` text DEFAULT NULL,
+  `message` text,
+  `controller` tinytext,
+  `action` text,
   `target_id` int(11) DEFAULT NULL,
-  `extra` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `user_ip` text DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `extra` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `user_ip` text
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
---
--- Очистить таблицу перед добавлением данных `logs`
---
-
-TRUNCATE TABLE `logs`;
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
   `id` int(10) UNSIGNED NOT NULL,
   `shop_id` tinytext NOT NULL,
-  `kinoplan_id` tinytext DEFAULT NULL,
-  `sber_id` tinytext DEFAULT NULL,
+  `kinoplan_id` tinytext,
+  `sber_id` tinytext,
   `user_id` int(11) DEFAULT NULL,
-  `order_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `order_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `visit_date` tinytext NOT NULL,
   `price` float NOT NULL,
-  `payment` int(11) NOT NULL DEFAULT 0,
+  `payment` int(11) NOT NULL DEFAULT '0',
   `places` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `film` tinytext NOT NULL,
   `performanceId` int(11) NOT NULL,
-  `kinoplan_response` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `kinoplan_response` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
 
 --
--- Очистить таблицу перед добавлением данных `orders`
+-- Структура таблицы `reviews`
 --
 
-TRUNCATE TABLE `orders`;
+CREATE TABLE `reviews` (
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` date NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `reviews`
+--
+
+INSERT INTO `reviews` (`name`, `data`, `text`) VALUES
+('Павел', '2023-11-01', 'вкусно'),
+('ШАдва', '2023-11-07', '12341234');
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `scripts`
 --
 
-DROP TABLE IF EXISTS `scripts`;
 CREATE TABLE `scripts` (
   `id` int(11) NOT NULL,
   `title` text NOT NULL,
   `code` text NOT NULL,
   `status` int(11) NOT NULL,
   `lang_code` varchar(3) NOT NULL DEFAULT 'ru'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `scripts`
---
-
-TRUNCATE TABLE `scripts`;
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `social_networks`
 --
 
-DROP TABLE IF EXISTS `social_networks`;
 CREATE TABLE `social_networks` (
   `id` int(11) NOT NULL,
   `title` tinytext NOT NULL,
   `link` tinytext NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `status` int(11) NOT NULL DEFAULT '1',
   `user_id` int(11) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
---
--- Очистить таблицу перед добавлением данных `social_networks`
---
-
-TRUNCATE TABLE `social_networks`;
 --
 -- Дамп данных таблицы `social_networks`
 --
@@ -298,52 +306,40 @@ INSERT INTO `social_networks` (`id`, `title`, `link`, `status`, `user_id`) VALUE
 -- Структура таблицы `users`
 --
 
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) UNSIGNED NOT NULL,
-  `surname` text CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `surname` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `patronymic` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sex` int(11) NOT NULL DEFAULT 0 COMMENT '0 - не указан; 1 - мужской; 2 - женский',
-  `birthday` tinytext DEFAULT NULL,
-  `phone` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sex` int(11) NOT NULL DEFAULT '0' COMMENT '0 - не указан; 1 - мужской; 2 - женский',
+  `birthday` tinytext,
+  `phone` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `email` varchar(32) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `login_changed` int(11) NOT NULL DEFAULT 0,
+  `login_changed` int(11) NOT NULL DEFAULT '0',
   `pass_hash` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `usergroup` int(11) UNSIGNED NOT NULL,
-  `status` int(1) NOT NULL DEFAULT 0,
-  `code` tinytext DEFAULT NULL,
-  `img` tinytext DEFAULT NULL,
-  `registration_date` timestamp NULL DEFAULT current_timestamp(),
-  `user_ip` tinytext DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `status` int(1) NOT NULL DEFAULT '0',
+  `code` tinytext,
+  `img` tinytext,
+  `registration_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_ip` tinytext
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
---
--- Очистить таблицу перед добавлением данных `users`
---
-
-TRUNCATE TABLE `users`;
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `users_groups`
 --
 
-DROP TABLE IF EXISTS `users_groups`;
 CREATE TABLE `users_groups` (
   `id` int(11) UNSIGNED NOT NULL,
   `title` tinytext NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `code` varchar(32) NOT NULL,
   `lang_code` varchar(3) NOT NULL DEFAULT 'ru'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
---
--- Очистить таблицу перед добавлением данных `users_groups`
---
-
-TRUNCATE TABLE `users_groups`;
 --
 -- Дамп данных таблицы `users_groups`
 --
